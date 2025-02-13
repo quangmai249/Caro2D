@@ -27,14 +27,17 @@ public class ButtonManager : MonoBehaviour
     private void ButtonSetting()
     {
         AudioManager.instance.ClickedButton();
-        buttons[0].gameObject.SetActive(!buttons[0].gameObject.activeSelf);
         GameObject.FindGameObjectWithTag(NameTag.CANVAS_MANAGER).GetComponent<CanvasManager>().GetPanel(0).SetActive(true);
+
+        buttons[0].gameObject.SetActive(!buttons[0].gameObject.activeSelf);
     }
 
     private void ButtonSaveSetting()
     {
         AudioManager.instance.ClickedButton();
-        buttons[0].gameObject.SetActive(!buttons[0].gameObject.activeSelf);
+        AudioManager.instance.SaveVolume();
         GameObject.FindGameObjectWithTag(NameTag.CANVAS_MANAGER).GetComponent<CanvasManager>().GetPanel(0).SetActive(false);
+
+        buttons[0].gameObject.SetActive(!buttons[0].gameObject.activeSelf);
     }
 }

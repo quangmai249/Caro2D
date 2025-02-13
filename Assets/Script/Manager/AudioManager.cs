@@ -31,6 +31,9 @@ public class AudioManager : MonoBehaviour
     {
         music.onValueChanged.AddListener(SetMusic);
         sfx.onValueChanged.AddListener(SetSFX);
+
+        music.value = PlayerPrefs.GetFloat(NameTag.MIXER_MUSIC, 1f);
+        sfx.value = PlayerPrefs.GetFloat(NameTag.MIXER_SFX, 1f);
     }
 
     private void SetSFX(float arg0)
@@ -51,5 +54,10 @@ public class AudioManager : MonoBehaviour
     public void ClickedButton()
     {
         clickedButton.PlayOneShot(clips[1]);
+    }
+    public void SaveVolume()
+    {
+        PlayerPrefs.SetFloat(NameTag.MIXER_MUSIC, music.value);
+        PlayerPrefs.GetFloat(NameTag.MIXER_SFX, music.value);
     }
 }

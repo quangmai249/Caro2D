@@ -25,11 +25,11 @@ public class HomeScene : MonoBehaviour
     public void Button3x3()
     {
         AudioManager.instance.ClickedButton();
-        SceneManager.LoadScene(NameTag.GAMEPLAY_SCENE);
+        SceneManager.LoadScene(NameTag.GAMEPLAY3X3_SCENE);
     }
     public void Button5x5()
     {
         AudioManager.instance.ClickedButton();
-        SceneManager.LoadScene(NameTag.GAMEPLAY_SCENE);
+        SceneManager.LoadScene(NameTag.GAMEPLAY5X5_SCENE);
     }
 }

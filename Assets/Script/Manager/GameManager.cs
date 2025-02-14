@@ -8,21 +8,33 @@ public class GameManager : MonoBehaviour
     [SerializeField] int numWinGame;
     [SerializeField] float distance;
 
+    [SerializeField] bool isPause;
+
     public static GameManager instance;
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
-            Destroy(this);
+            Destroy(this.gameObject);
 
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(this.gameObject);
+
+        isPause = false;
     }
+
+    public bool IsPause
+    {
+        get => this.isPause;
+        set => this.isPause = value;
+    }
+
     public int Row
     {
         get => this.row;
         set => this.row = value;
     }
+
     public float Distance
     {
         get => this.distance;

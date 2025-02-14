@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [Header("Stats")]
     [SerializeField] AudioSource clickedPop;
     [SerializeField] AudioSource clickedButton;
+    [SerializeField] AudioSource winGame;
 
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider music;
@@ -23,15 +24,14 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(this);
+            Destroy(this.gameObject);
 
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(this.gameObject);
     }
     private void Start()
     {
         music.onValueChanged.AddListener(SetMusic);
         sfx.onValueChanged.AddListener(SetSFX);
-
         music.value = PlayerPrefs.GetFloat(NameTag.MIXER_MUSIC, 1f);
         sfx.value = PlayerPrefs.GetFloat(NameTag.MIXER_SFX, 1f);
     }
@@ -46,6 +46,11 @@ public class AudioManager : MonoBehaviour
         mixer.SetFloat(NameTag.MIXER_MUSIC, Mathf.Log10(arg0) * 20);
     }
 
+    public void WinGame()
+    {
+        winGame.PlayOneShot(clips[2]);
+    }
+
     public void ClickedPop()
     {
         clickedPop.PlayOneShot(clips[0]);
@@ -58,6 +63,6 @@ public class AudioManager : MonoBehaviour
     public void SaveVolume()
     {
         PlayerPrefs.SetFloat(NameTag.MIXER_MUSIC, music.value);
-        PlayerPrefs.GetFloat(NameTag.MIXER_SFX, music.value);
+        PlayerPrefs.SetFloat(NameTag.MIXER_SFX, sfx.value);
     }
 }

@@ -7,6 +7,8 @@ TagManager:
   - ButtonManager
   - AudioManager
   - CanvasManager
+  - NodeManager
+  - Node
   layers:
   - Default
   - TransparentFX

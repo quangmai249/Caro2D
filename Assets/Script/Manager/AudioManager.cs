@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource clickedPop;
     [SerializeField] AudioSource clickedButton;
     [SerializeField] AudioSource winGame;
+    [SerializeField] AudioSource oops;
 
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider music;
@@ -32,8 +33,9 @@ public class AudioManager : MonoBehaviour
     {
         music.onValueChanged.AddListener(SetMusic);
         sfx.onValueChanged.AddListener(SetSFX);
-        music.value = PlayerPrefs.GetFloat(NameTag.MIXER_MUSIC, 1f);
-        sfx.value = PlayerPrefs.GetFloat(NameTag.MIXER_SFX, 1f);
+
+        music.value = PlayerPrefs.GetFloat(NameTag.MIXER_MUSIC, .5f);
+        sfx.value = PlayerPrefs.GetFloat(NameTag.MIXER_SFX, .5f);
     }
 
     private void SetSFX(float arg0)
@@ -60,6 +62,12 @@ public class AudioManager : MonoBehaviour
     {
         clickedButton.PlayOneShot(clips[1]);
     }
+
+    public void Oops()
+    {
+        oops.PlayOneShot(clips[3]);
+    }
+
     public void SaveVolume()
     {
         PlayerPrefs.SetFloat(NameTag.MIXER_MUSIC, music.value);

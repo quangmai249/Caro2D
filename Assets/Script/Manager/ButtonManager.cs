@@ -21,11 +21,11 @@ public class ButtonManager : MonoBehaviour
 
     private void Start()
     {
-        this.btnPause = buttons[0];
-        this.btnResume = buttons[1];
-        this.btnSetting = buttons[2];
-        this.btnRestart = buttons[3];
-        this.btnSaveSetting = buttons[4];
+        this.btnPause = MethodSetting.GetItem(NameTag.BTN_PAUSE, this.buttons);
+        this.btnResume = MethodSetting.GetItem(NameTag.BTN_RESUME, this.buttons);
+        this.btnSetting = MethodSetting.GetItem(NameTag.BTN_SETTING, this.buttons);
+        this.btnRestart = MethodSetting.GetItem(NameTag.BTN_RESTART, this.buttons);
+        this.btnSaveSetting = MethodSetting.GetItem(NameTag.BTN_SAVE_SETTING, this.buttons);
 
         this.btnPause.onClick.AddListener(ButtonPause);
         this.btnResume.onClick.AddListener(ButtonResume);
@@ -39,12 +39,18 @@ public class ButtonManager : MonoBehaviour
         foreach (var temp in GameObject.FindGameObjectsWithTag(NameTag.NODE))
             NodeManager.instance.Enqueue(temp);
 
+        this.btnPause.gameObject.SetActive(true);
+
+        AudioManager.instance.ClickedButton();
+        CanvasManager.instance.PanelPause(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.IsPause = false;
     }
 
     private void ButtonResume()
     {
         this.btnPause.gameObject.SetActive(true);
+        AudioManager.instance.ClickedButton();
         CanvasManager.instance.PanelPause(false);
         GameManager.instance.IsPause = false;
     }
@@ -52,6 +58,7 @@ public class ButtonManager : MonoBehaviour
     private void ButtonPause()
     {
         this.btnPause.gameObject.SetActive(false);
+        AudioManager.instance.ClickedButton();
         CanvasManager.instance.PanelPause(true);
         GameManager.instance.IsPause = true;
     }

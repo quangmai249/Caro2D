@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,17 @@ public class HomeScene : MonoBehaviour
     void Start()
     {
         panelSelect.SetActive(false);
+
         buttons[0].onClick.AddListener(ButtonPlay);
         buttons[1].onClick.AddListener(Button3x3);
         buttons[2].onClick.AddListener(Button5x5);
+
+        ButtonManager.instance.SetButtonInGame(false);
+        CanvasManager.instance.PanelPause(false);
+        CanvasManager.instance.PanelSetting(false);
+        CanvasManager.instance.PanelUser(false);
+
+        Background.instance.transform.DOScale(new Vector3(.5f, .5f, .5f), 1f);
     }
 
     private void ButtonPlay()
@@ -25,11 +34,14 @@ public class HomeScene : MonoBehaviour
     public void Button3x3()
     {
         AudioManager.instance.ClickedButton();
+        Background.instance.transform.DOScale(new Vector3(2, 2, 2), 2f);
+
         SceneManager.LoadScene(NameTag.GAMEPLAY3X3_SCENE);
     }
     public void Button5x5()
     {
         AudioManager.instance.ClickedButton();
+
         SceneManager.LoadScene(NameTag.GAMEPLAY5X5_SCENE);
     }
 }

@@ -26,16 +26,22 @@ public class Node : MonoBehaviour
 
         this.GetComponent<SpriteRenderer>().sprite = SpriteManager.instance.GetSpriteLetterByStatus(this.status);
 
-        GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().Turn = this.status == 0 ? 1 : 0;
-
         AudioManager.instance.ClickedPop();
+
         GamePlay.moveCount++;
     }
 
     private void CheckIsWinGame()
     {
+
+
         if (GamePlay.IsDraw())
-            Debug.Log("Draw!");
+        {
+            CanvasManager.instance.TextNotify = "Draw!";
+            return;
+        }
+
+        GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().Turn = this.status == 0 ? 1 : 0;
     }
 
     public int Status

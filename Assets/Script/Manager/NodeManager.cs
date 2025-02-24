@@ -41,10 +41,10 @@ public class NodeManager : MonoBehaviour
             go.SetActive(false);
 
         if (go.GetComponent<Node>().Status != -1)
-            go.GetComponent<Node>().Status = -1;
-
-        if (go.GetComponent<SpriteRenderer>().sprite.name != NameTag.SQUARE_LETTER_SPRITE)
+        {
             go.GetComponent<SpriteRenderer>().sprite = SpriteManager.instance.GetSpriteLetterByName(NameTag.SQUARE_LETTER_SPRITE);
+            go.GetComponent<Node>().Status = -1;
+        }
 
         queue.Enqueue(go);
     }

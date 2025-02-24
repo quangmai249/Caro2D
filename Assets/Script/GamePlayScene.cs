@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,12 @@ public class GamePlayScene : MonoBehaviour
     private void Awake()
     {
         GamePlay.moveCount = 0;
-
-        turn = Random.Range(0, 2);
-        Debug.Log(turn);
+        this.turn = Random.Range(0, 2);
     }
     private void Start()
     {
+        ButtonManager.instance.SetButtonInGame(true);
+
         for (int i = 0; i < numNode; i++)
         {
             for (int j = 0; j < numNode; j++)
@@ -28,12 +29,22 @@ public class GamePlayScene : MonoBehaviour
 
         GameObject.FindGameObjectWithTag(NameTag.MAIN_CAMERA).transform.position
             = new Vector3(CenterValue, CenterValue, GameObject.FindGameObjectWithTag(NameTag.MAIN_CAMERA).transform.position.z);
+
+        CanvasManager.instance.PanelUser(true);
+
+        SpriteManager.instance.SetSpriteTurnUser(this.turn);
+        CanvasManager.instance.TextNotify = this.turn == 0 ? "O move first" : "X move first";
     }
 
     public int Turn
     {
         get => this.turn;
-        set => this.turn = value;
+        set
+        {
+            this.turn = value;
+            SpriteManager.instance.SetSpriteTurnUser(value);
+            CanvasManager.instance.TextNotify = this.turn == 0 ? "O turn" : "X turn";
+        }
     }
 
     private float CenterValue

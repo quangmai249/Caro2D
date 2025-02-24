@@ -28,7 +28,7 @@ public static class GamePlay
         // Check backward direction
         count += CountInDirection(x, y, player, -dx, -dy);
 
-        return count >= 5;
+        return count >= 3;
     }
 
     private static int CountInDirection(int x, int y, int player, int dx, int dy)

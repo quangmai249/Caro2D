@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,57 +6,278 @@ public static class GamePlay
 {
     public static int moveCount;
     public static int numNodeWin;
-    public static bool IsDraw()
+    private static List<GameObject> lsNodeWin;
+    public static bool IsDraw(int numNode)
     {
-        return moveCount >= Mathf.Pow(GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode, 2);
+        return moveCount >= Mathf.Pow(numNode, 2);
     }
 
-    public static bool CheckWin(int x, int y, int player)
+    public static bool IsWin(GameObject go, List<GameObject> lsNode)
     {
-        return CheckDirection(x, y, player, 1, 0) ||  // Horizontal
-               CheckDirection(x, y, player, 0, 1) ||  // Vertical
-               CheckDirection(x, y, player, 1, 1) ||  // Diagonal (\)
-               CheckDirection(x, y, player, 1, -1);   // Diagonal (/)
+        if (CheckHorizontal(go, lsNode) || CheckVertical(go, lsNode) || CheckDiagonal_I_III(go, lsNode) || CheckDiagonal_II_IV(go, lsNode))
+            return true;
+
+        return false;
     }
 
-    private static bool CheckDirection(int x, int y, int player, int dx, int dy)
+    public static bool IsNullGO(Vector2 vec, float d)
     {
-        int count = 1;
-
-        // Check forward direction
-        count += CountInDirection(x, y, player, dx, dy);
-        // Check backward direction
-        count += CountInDirection(x, y, player, -dx, -dy);
-
-        return count >= 3;
+        return false;
     }
 
-    private static int CountInDirection(int x, int y, int player, int dx, int dy)
+    public static Collider2D IsgRayCastHit2DFrom(Vector2 origin, int n)
+    {
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(new Vector2(origin.x + GameManager.instance.Distance * n, origin.y), origin);
+
+        if (hit.collider == null)
+            return null;
+
+        return hit.collider;
+    }
+
+    public static List<GameObject> LsNodeWin
+    {
+        get => lsNodeWin;
+    }
+
+    private static bool CheckDiagonal_I_III(GameObject go, List<GameObject> lsNode)
     {
         int count = 0;
-        int i = 1;
+        bool check = false;
+        lsNodeWin = new List<GameObject>();
 
-        int[,] board = new int[
-        GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode,
-        GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode];
-
-        while (true)
+        //x > 0 and y > 0
+        for (int i = 0; i < numNodeWin; i++)
         {
-            int nx = x + i * dx;
-            int ny = y + i * dy;
-
-            if (nx < 0 ||
-                ny < 0 ||
-                nx >= GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode ||
-                ny >= GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode ||
-                board[nx, ny] != player)
+            foreach (GameObject item in lsNode)
             {
-                break;
+                if (go.transform.position + new Vector3(i * GameManager.instance.Distance, i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
             }
 
-            count++;
-            i++;
+            if (check == false)
+                break;
+
+            check = false;
         }
-        return count;
+
+        //x < 0 and y < 0
+        for (int i = 1; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(-i * GameManager.instance.Distance, -i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //Debug.Log(go.GetComponent<Node>().Status + " - diagonal I and III - count is " + count + " at " + DateTime.Now);
+
+        if (count >= numNodeWin)
+            return true;
+
+        return false;
+    }
+
+    private static bool CheckDiagonal_II_IV(GameObject go, List<GameObject> lsNode)
+    {
+        int count = 0;
+        bool check = false;
+        lsNodeWin = new List<GameObject>();
+
+        //x < 0 and y > 0
+        for (int i = 0; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(-i * GameManager.instance.Distance, i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //x > 0 and y < 0
+        for (int i = 1; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(i * GameManager.instance.Distance, -i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //Debug.Log(go.GetComponent<Node>().Status + " - diagonal II and IV - count is " + count + " at " + DateTime.Now);
+
+        if (count >= numNodeWin)
+            return true;
+
+        return false;
+    }
+
+    private static bool CheckVertical(GameObject go, List<GameObject> lsNode)
+    {
+        int count = 0;
+        bool check = false;
+        lsNodeWin = new List<GameObject>();
+
+        //up side
+        for (int i = 0; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(0, i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //down side
+        for (int i = 1; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(0, -i * GameManager.instance.Distance, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //Debug.Log(go.GetComponent<Node>().Status + " - vertical - count is " + count + " at " + DateTime.Now);
+
+        if (count >= numNodeWin)
+            return true;
+
+        return false;
+    }
+
+    private static bool CheckHorizontal(GameObject go, List<GameObject> lsNode)
+    {
+        int count = 0;
+        bool check = false;
+        lsNodeWin = new List<GameObject>();
+
+        //right side
+        for (int i = 0; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(i * GameManager.instance.Distance, 0, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //left side
+        for (int i = 1; i < numNodeWin; i++)
+        {
+            foreach (GameObject item in lsNode)
+            {
+                if (go.transform.position + new Vector3(-i * GameManager.instance.Distance, 0, 0) == item.transform.position)
+                {
+                    if (go.GetComponent<Node>().Status == item.GetComponent<Node>().Status)
+                    {
+                        count++;
+                        check = true;
+                        lsNodeWin.Add(item);
+                    }
+                    break;
+                }
+            }
+
+            if (check == false)
+                break;
+
+            check = false;
+        }
+
+        //Debug.Log(go.GetComponent<Node>().Status + " - horizontal - count is " + count + " at " + DateTime.Now);
+
+        if (count >= numNodeWin)
+            return true;
+
+        return false;
     }
 }

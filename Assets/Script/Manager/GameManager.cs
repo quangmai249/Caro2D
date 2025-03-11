@@ -8,10 +8,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] int row;
-    [SerializeField] int numWinGame;
     [SerializeField] float distance;
 
     [SerializeField] bool isPause;
+    [SerializeField] bool isWin;
 
     public static GameManager instance;
     private void Awake()
@@ -30,6 +30,12 @@ public class GameManager : MonoBehaviour
     {
         get => this.isPause;
         set => this.isPause = value;
+    }
+
+    public bool IsWin
+    {
+        get => this.isWin;
+        set => this.isWin = value;
     }
 
     public int Row

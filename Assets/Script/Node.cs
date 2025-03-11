@@ -5,9 +5,14 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     private int status = -1;
+    private GamePlayScene gamePlayScene;
+    private void Start()
+    {
+        gamePlayScene = GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>();
+    }
     private void OnMouseDown()
     {
-        if (GameManager.instance.IsPause)
+        if (GameManager.instance.IsPause || GameManager.instance.IsWin)
             return;
 
         if (this.status != -1)
@@ -16,6 +21,7 @@ public class Node : MonoBehaviour
             return;
         }
 
+        gamePlayScene.LsNode.Add(this.gameObject);
         this.SetNode();
         this.CheckIsWinGame();
     }
@@ -33,9 +39,17 @@ public class Node : MonoBehaviour
 
     private void CheckIsWinGame()
     {
+        if (GamePlay.IsWin(this.gameObject, gamePlayScene.LsNode))
+        {
+            GameManager.instance.IsWin = true;
+            CanvasManager.instance.TextNotify = this.status == 0 ? "O win game!" : "X win game!";
 
+            Debug.Log(GamePlay.LsNodeWin.Count);
 
-        if (GamePlay.IsDraw())
+            return;
+        }
+
+        if (GamePlay.IsDraw(GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().NumNode))
         {
             CanvasManager.instance.TextNotify = "Draw!";
             return;

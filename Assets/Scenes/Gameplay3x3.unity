@@ -259,7 +259,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numNode: 3
+  numNodeWin: 3
   turn: 0
+  lsNode: []
 --- !u!1 &1927205367
 GameObject:
   m_ObjectHideFlags: 0

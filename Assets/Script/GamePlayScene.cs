@@ -6,11 +6,16 @@ using UnityEngine;
 public class GamePlayScene : MonoBehaviour
 {
     [SerializeField] int numNode = 3;
+    [SerializeField] int numNodeWin = 3;
     [SerializeField] int turn = 0;
+    [SerializeField] List<GameObject> lsNode;
     private GameObject node;
     private void Awake()
     {
         GamePlay.moveCount = 0;
+        GamePlay.numNodeWin = this.numNodeWin;
+        GameManager.instance.IsWin = false;
+
         this.turn = Random.Range(0, 2);
     }
     private void Start()
@@ -34,6 +39,8 @@ public class GamePlayScene : MonoBehaviour
 
         SpriteManager.instance.SetSpriteTurnUser(this.turn);
         CanvasManager.instance.TextNotify = this.turn == 0 ? "O move first" : "X move first";
+
+        Debug.Log("Length of List Node is " + lsNode.Count);
     }
 
     public int Turn
@@ -55,5 +62,18 @@ public class GamePlayScene : MonoBehaviour
     public int NumNode
     {
         get => this.numNode;
+        set => this.numNode = value;
+    }
+
+    public int NumNodeWin
+    {
+        get => this.numNodeWin;
+        set => this.numNodeWin = value;
+    }
+
+    public List<GameObject> LsNode
+    {
+        get => this.lsNode;
+        set => this.lsNode = value;
     }
 }

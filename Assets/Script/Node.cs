@@ -44,7 +44,7 @@ public class Node : MonoBehaviour
             GameManager.instance.IsWin = true;
             CanvasManager.instance.TextNotify = this.status == 0 ? "O win game!" : "X win game!";
 
-            Debug.Log(GamePlay.LsNodeWin.Count);
+            GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().SetLineWinGame(GamePlay.LsNodeWin);
 
             return;
         }

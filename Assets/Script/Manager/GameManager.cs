@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool isPause;
     [SerializeField] bool isWin;
 
+    [SerializeField] LineRenderer lineRenderer;
+
     public static GameManager instance;
+    private LineRenderer line;
     private void Awake()
     {
         if (instance == null)
@@ -47,5 +50,16 @@ public class GameManager : MonoBehaviour
     public float Distance
     {
         get => this.distance;
+    }
+
+    public LineRenderer Line
+    {
+        get => this.line;
+        set => this.line = value;
+    }
+
+    public LineRenderer LineRenderer
+    {
+        get => this.lineRenderer;
     }
 }

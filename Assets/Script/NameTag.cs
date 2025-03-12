@@ -31,6 +31,7 @@ public static class NameTag
     public const string SQUARE_NODE = "Square(Clone)";
 
     //name of canvases
+    public const string PANEL_HOME_SCENE = "Panel Home";
     public const string PANEL_PAUSE = "Panel Pause";
     public const string PANEL_SETTING = "Panel Setting";
     public const string PANEL_USER = "Panel User";

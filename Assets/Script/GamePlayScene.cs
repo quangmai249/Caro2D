@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GamePlayScene : MonoBehaviour
@@ -8,6 +9,7 @@ public class GamePlayScene : MonoBehaviour
     [SerializeField] int numNode = 3;
     [SerializeField] int numNodeWin = 3;
     [SerializeField] int turn = 0;
+
     [SerializeField] List<GameObject> lsNode;
     private GameObject node;
     private void Awake()
@@ -16,7 +18,12 @@ public class GamePlayScene : MonoBehaviour
         GamePlay.numNodeWin = this.numNodeWin;
         GameManager.instance.IsWin = false;
 
+        if (GameManager.instance.Line == null)
+            GameManager.instance.Line = Instantiate(GameManager.instance.LineRenderer);
+        GameManager.instance.Line.positionCount = 0;
+
         this.turn = Random.Range(0, 2);
+        Background.instance.SetBG(new Vector3(numNode / 2, numNode / 2, 0) * GameManager.instance.Distance, new Vector3(numNode, numNode, 0), this.numNodeWin);
     }
     private void Start()
     {
@@ -39,8 +46,13 @@ public class GamePlayScene : MonoBehaviour
 
         SpriteManager.instance.SetSpriteTurnUser(this.turn);
         CanvasManager.instance.TextNotify = this.turn == 0 ? "O move first" : "X move first";
+    }
 
-        Debug.Log("Length of List Node is " + lsNode.Count);
+    public void SetLineWinGame(List<GameObject> ls)
+    {
+        GameManager.instance.Line.positionCount = 2;
+        GameManager.instance.Line.SetPosition(0, this.GetFirstNodeToDrawLine(ls).transform.position);
+        GameManager.instance.Line.SetPosition(1, this.GetSecondNodeToDrawLine(ls).transform.position);
     }
 
     public int Turn
@@ -52,6 +64,62 @@ public class GamePlayScene : MonoBehaviour
             SpriteManager.instance.SetSpriteTurnUser(value);
             CanvasManager.instance.TextNotify = this.turn == 0 ? "O turn" : "X turn";
         }
+    }
+
+    private GameObject GetSecondNodeToDrawLine(List<GameObject> ls)
+    {
+        GameObject res;
+
+        //vertical
+        if (ls[0].transform.position.x == ls[1].transform.position.x)
+        {
+            res = ls[0];
+
+            foreach (GameObject item in ls)
+            {
+                if (res.transform.position.y > item.transform.position.y)
+                    res = item;
+            }
+
+            return res;
+        }
+
+        //horizontal
+        res = ls[0];
+        foreach (GameObject item in ls)
+        {
+            if (res.transform.position.x > item.transform.position.x)
+                res = item;
+        }
+        return res;
+    }
+
+    private GameObject GetFirstNodeToDrawLine(List<GameObject> ls)
+    {
+        GameObject res;
+
+        //vertical
+        if (ls[0].transform.position.x == ls[1].transform.position.x)
+        {
+            res = ls[0];
+
+            foreach (GameObject item in ls)
+            {
+                if (res.transform.position.y < item.transform.position.y)
+                    res = item;
+            }
+
+            return res;
+        }
+
+        //horizontal
+        res = ls[0];
+        foreach (GameObject item in ls)
+        {
+            if (res.transform.position.x < item.transform.position.x)
+                res = item;
+        }
+        return res;
     }
 
     private float CenterValue

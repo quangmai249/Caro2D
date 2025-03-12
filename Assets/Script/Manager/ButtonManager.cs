@@ -48,6 +48,8 @@ public class ButtonManager : MonoBehaviour
 
         this.btnPause.gameObject.SetActive(true);
 
+        GameManager.instance.Line.positionCount = 0;
+
         AudioManager.instance.ClickedButton();
         CanvasManager.instance.PanelPause(false);
         SceneManager.LoadScene(NameTag.HOME_SCENE);
@@ -60,6 +62,8 @@ public class ButtonManager : MonoBehaviour
             NodeManager.instance.Enqueue(temp);
 
         this.btnPause.gameObject.SetActive(true);
+
+        GameManager.instance.Line.positionCount = 0;
 
         AudioManager.instance.ClickedButton();
         CanvasManager.instance.PanelPause(false);

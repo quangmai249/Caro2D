@@ -10,7 +10,8 @@ public class HomeScene : MonoBehaviour
 {
     [SerializeField] Button[] buttons;
     [SerializeField] GameObject panelSelect;
-    void Start()
+
+    private void Start()
     {
         panelSelect.SetActive(false);
 
@@ -23,7 +24,7 @@ public class HomeScene : MonoBehaviour
         CanvasManager.instance.PanelSetting(false);
         CanvasManager.instance.PanelUser(false);
 
-        Background.instance.transform.DOScale(new Vector3(.5f, .5f, .5f), 1f);
+        Background.instance.SetBG(Vector3.zero, Vector3.one, 1f);
     }
 
     private void ButtonPlay()
@@ -34,8 +35,6 @@ public class HomeScene : MonoBehaviour
     public void Button3x3()
     {
         AudioManager.instance.ClickedButton();
-        Background.instance.transform.DOScale(new Vector3(2, 2, 2), 2f);
-
         SceneManager.LoadScene(NameTag.GAMEPLAY3X3_SCENE);
     }
     public void Button5x5()

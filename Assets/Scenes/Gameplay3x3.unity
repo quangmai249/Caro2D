@@ -261,6 +261,7 @@ MonoBehaviour:
   numNode: 3
   numNodeWin: 3
   turn: 0
+  lineRenderer: {fileID: 6690957691577341553, guid: a6ad1b2516aabad40ba386327bc4c134, type: 3}
   lsNode: []
 --- !u!1 &1927205367
 GameObject:

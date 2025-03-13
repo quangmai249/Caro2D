@@ -3,41 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class Ads : MonoBehaviour, IUnityAdsInitializationListener
+public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 {
-    [SerializeField] string _androidGameId;
-    [SerializeField] string _iOSGameId;
+    private const string _androidGameId = "5812253";
+    private const string _iOSGameId = "5812252";
     [SerializeField] bool _testMode = true;
+
     private string _gameId;
 
-    void Awake()
+    private void Awake()
     {
-        InitializeAds();
+        this.InitializedAds();
     }
 
-    public void InitializeAds()
+    private void InitializedAds()
     {
 #if UNITY_IOS
-            _gameId = _iOSGameId;
+        _gameId = _iOSGameId;
 #elif UNITY_ANDROID
         _gameId = _androidGameId;
 #elif UNITY_EDITOR
-            _gameId = _androidGameId; //Only for testing the functionality in the Editor
+        _gameId = _androidGameId; //only for testing the functionality in editor
 #endif
         if (!Advertisement.isInitialized && Advertisement.isSupported)
-        {
             Advertisement.Initialize(_gameId, _testMode, this);
-        }
-    }
 
+    }
 
     public void OnInitializationComplete()
     {
-        Debug.Log("Unity Ads initialization complete.");
+        Debug.Log("Unity Ads initialization complete!");
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
     {
-        Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+        Debug.Log($"Unitty Ads initialization failed {error.ToString()} - {message}");
     }
 }

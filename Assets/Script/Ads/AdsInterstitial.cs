@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
-public class InterstitalAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class AdsInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] string _androidAdUnitId = "Interstitial_Android";
-    [SerializeField] string _iOsAdUnitId = "Interstitial_iOS";
-    string _adUnitId;
+    [SerializeField] Button _showAdButton;
+    //private const string _androidAdUnitId = "ca-app-pub-6859108134908177/5711152361";
+    private const string _androidAdUnitId = "Interstitial_Android";
+    private const string _iOsAdUnitId = "Interstitial_iOS";
+
+    private string _adUnitId;
 
     void Awake()
     {
@@ -15,6 +19,9 @@ public class InterstitalAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
             ? _iOsAdUnitId
             : _androidAdUnitId;
+
+        //Diable the button until the ad is ready to show
+        //_showAdButton.interactable = false;
     }
 
     // Load content to the Ad Unit:
@@ -25,7 +32,7 @@ public class InterstitalAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         Advertisement.Load(_adUnitId, this);
     }
 
-    // Show the loaded content in the Ad Unit:
+    // Show the loaded content in the Ad Unit:]
     public void ShowAd()
     {
         // Note that if the ad content wasn't previously loaded, this method will fail

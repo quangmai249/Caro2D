@@ -40,6 +40,9 @@ public class NodeManager : MonoBehaviour
         if (go.activeSelf)
             go.SetActive(false);
 
+        if (go.transform.localScale != _node.transform.localScale)
+            go.transform.localScale = _node.transform.localScale;
+
         if (go.GetComponent<Node>().Status != -1)
         {
             go.GetComponent<SpriteRenderer>().sprite = SpriteManager.instance.GetSpriteLetterByName(NameTag.SQUARE_LETTER_SPRITE);

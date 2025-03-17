@@ -10,16 +10,19 @@ public class HomeScene : MonoBehaviour
 {
     [SerializeField] Button[] buttons;
     [SerializeField] GameObject panelSelect;
-
+    private void Awake()
+    {
+        MethodSetting.GetItem(NameTag.BTN_PLAY, this.buttons).onClick.AddListener(ButtonPlay);
+        MethodSetting.GetItem(NameTag.BTN_3X3, this.buttons).onClick.AddListener(Button3x3);
+        MethodSetting.GetItem(NameTag.BTN_5X5, this.buttons).onClick.AddListener(Button5x5);
+        MethodSetting.GetItem(NameTag.BTN_3X3_BOT, this.buttons).onClick.AddListener(Button3x3BOT);
+        MethodSetting.GetItem(NameTag.BTN_5X5_BOT, this.buttons).onClick.AddListener(Button5x5BOT);
+    }
     private void Start()
     {
         panelSelect.SetActive(false);
 
-        buttons[0].onClick.AddListener(ButtonPlay);
-        buttons[1].onClick.AddListener(Button3x3);
-        buttons[2].onClick.AddListener(Button5x5);
-
-        ButtonManager.instance.SetButtonInGame(false);
+        ButtonManager.instance.SetButtonQuitInGame(false);
         CanvasManager.instance.PanelPause(false);
         CanvasManager.instance.PanelSetting(false);
         CanvasManager.instance.PanelUser(false);
@@ -42,5 +45,15 @@ public class HomeScene : MonoBehaviour
         AudioManager.instance.ClickedButton();
 
         SceneManager.LoadScene(NameTag.GAMEPLAY5X5_SCENE);
+    }
+    public void Button3x3BOT()
+    {
+        AudioManager.instance.ClickedButton();
+        SceneManager.LoadScene(NameTag.GAMEPLAY3X3BOT_SCENE);
+    }
+    public void Button5x5BOT()
+    {
+        AudioManager.instance.ClickedButton();
+        SceneManager.LoadScene(NameTag.GAMEPLAY5X5BOT_SCENE);
     }
 }

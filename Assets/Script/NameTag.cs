@@ -5,12 +5,16 @@ public static class NameTag
     public const string NODE_MANAGER = "NodeManager";
     public const string NODE = "Node";
     public const string HOME_SCENE = "Home";
-    public const string GAMEPLAY3X3_SCENE = "Gameplay3x3";
-    public const string GAMEPLAY5X5_SCENE = "Gameplay5x5";
     public const string MIXER_MUSIC = "Music";
     public const string MIXER_SFX = "SFX";
     public const string MAIN_CAMERA = "MainCamera";
     public const string GAMEPLAY = "Gameplay";
+
+    //name of scenes
+    public const string GAMEPLAY3X3_SCENE = "Gameplay3x3";
+    public const string GAMEPLAY3X3BOT_SCENE = "Gameplay3x3BOT";
+    public const string GAMEPLAY5X5_SCENE = "Gameplay5x5";
+    public const string GAMEPLAY5X5BOT_SCENE = "Gameplay5x5BOT";
 
     //name of sprites
     public const string X_LETTER_SPRITE = "x-letter";
@@ -20,6 +24,11 @@ public static class NameTag
     public const string O_USER_IMG = "O_USER";
 
     //name of buttons
+    public const string BTN_PLAY = "Button Play";
+    public const string BTN_3X3 = "Button 3x3";
+    public const string BTN_5X5 = "Button 5x5";
+    public const string BTN_3X3_BOT = "Button 3x3 BOT";
+    public const string BTN_5X5_BOT = "Button 5x5 BOT";
     public const string BTN_PAUSE = "Button Pause";
     public const string BTN_RESUME = "Button Resume";
     public const string BTN_SETTING = "Button Setting";

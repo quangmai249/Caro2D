@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,9 +22,13 @@ public class Node : MonoBehaviour
             return;
         }
 
-        gamePlayScene.LsNode.Add(this.gameObject);
-        this.SetNode();
-        this.CheckIsWinGame();
+        if (!gamePlayScene.IsBOT)
+        {
+            gamePlayScene.LsNode.Add(this.gameObject);
+            this.SetNode();
+            this.CheckIsWinGame();
+            return;
+        }
     }
 
     private void SetNode()
@@ -42,9 +47,14 @@ public class Node : MonoBehaviour
         if (GamePlay.IsWin(this.gameObject, gamePlayScene.LsNode))
         {
             GameManager.instance.IsWin = true;
+            ButtonManager.instance.SetButtonRestartInGame(true);
             CanvasManager.instance.TextNotify = this.status == 0 ? "O win game!" : "X win game!";
 
             GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().SetLineWinGame(GamePlay.LsNodeWin);
+
+            foreach (GameObject item in GameObject.FindGameObjectsWithTag(NameTag.NODE))
+                if (item.GetComponent<Node>().Status == -1)
+                    item.gameObject.transform.localScale = item.gameObject.transform.localScale * 0.5f;
 
             return;
         }

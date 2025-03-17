@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gameplay5x5.unity
     guid: 63b4636a42452d242851dde54e66e9a7
+  - enabled: 1
+    path: Assets/Scenes/Gameplay3x3BOT.unity
+    guid: 9336a229b3f497749a25ca99b99de250
+  - enabled: 1
+    path: Assets/Scenes/Gameplay5x5BOT.unity
+    guid: 497924bdce45fa542bf67a8acb5bdbe4
   m_configObjects: {}

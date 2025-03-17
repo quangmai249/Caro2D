@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -100,9 +101,13 @@ public class ButtonManager : MonoBehaviour
         CanvasManager.instance.PanelSetting(false);
     }
 
-    public void SetButtonInGame(bool isActive)
+    public void SetButtonQuitInGame(bool isActive)
+    {
+        this.btnQuit.gameObject.SetActive(isActive);
+    }
+
+    public void SetButtonRestartInGame(bool isActive)
     {
         this.btnRestart.gameObject.SetActive(isActive);
-        this.btnQuit.gameObject.SetActive(isActive);
     }
 }

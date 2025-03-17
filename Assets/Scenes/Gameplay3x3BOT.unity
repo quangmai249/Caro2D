@@ -183,7 +183,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -214,7 +214,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1908339632
+--- !u!1 &1625657462
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,38 +222,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1908339634}
-  - component: {fileID: 1908339633}
+  - component: {fileID: 1625657463}
+  - component: {fileID: 1625657465}
   m_Layer: 0
-  m_Name: 5x5 Scene
+  m_Name: 3x3 Scene
   m_TagString: Gameplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1908339633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908339632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae9c64da13806c14299b914c189edbd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numNode: 15
-  numNodeWin: 5
-  turn: 0
-  lsNode: []
---- !u!4 &1908339634
+--- !u!4 &1625657463
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908339632}
+  m_GameObject: {fileID: 1625657462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -262,6 +246,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1625657465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625657462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae9c64da13806c14299b914c189edbd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numNode: 3
+  numNodeWin: 3
+  turn: 0
+  lineRenderer: {fileID: 6690957691577341553, guid: a6ad1b2516aabad40ba386327bc4c134, type: 3}
+  lsNode: []
 --- !u!1 &1927205367
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,4 +300,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1927205368}
-  - {fileID: 1908339634}
+  - {fileID: 1625657463}

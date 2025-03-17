@@ -10,6 +10,7 @@ public class GamePlayScene : MonoBehaviour
     [SerializeField] int numNodeWin = 3;
     [SerializeField] int turn = 0;
 
+    [SerializeField] bool isBOT = false;
     [SerializeField] List<GameObject> lsNode;
     private GameObject node;
     private void Awake()
@@ -24,10 +25,16 @@ public class GamePlayScene : MonoBehaviour
 
         this.turn = Random.Range(0, 2);
         Background.instance.SetBG(new Vector3(numNode / 2, numNode / 2, 0) * GameManager.instance.Distance, new Vector3(numNode, numNode, 0), this.numNodeWin);
+
+        string notification = GameObject.FindGameObjectWithTag(NameTag.GAMEPLAY).GetComponent<GamePlayScene>().IsBOT
+            == false ? "This is not game using bot" : "This is game using bot";
+
+        Debug.Log(notification);
     }
     private void Start()
     {
-        ButtonManager.instance.SetButtonInGame(true);
+        ButtonManager.instance.SetButtonQuitInGame(true);
+        ButtonManager.instance.SetButtonRestartInGame(false);
 
         for (int i = 0; i < numNode; i++)
         {
@@ -125,6 +132,12 @@ public class GamePlayScene : MonoBehaviour
     private float CenterValue
     {
         get => ((numNode - 1) * GameManager.instance.Distance) / 2;
+    }
+
+    public bool IsBOT
+    {
+        get => this.isBOT;
+        set => this.isBOT = value;
     }
 
     public int NumNode
